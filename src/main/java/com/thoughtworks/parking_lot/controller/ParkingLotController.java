@@ -3,8 +3,14 @@ package com.thoughtworks.parking_lot.controller;
 import com.thoughtworks.parking_lot.model.ParkingLot;
 import com.thoughtworks.parking_lot.repository.ParkingPotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ParkingLotController {
@@ -21,5 +27,13 @@ public class ParkingLotController {
     public ResponseEntity deleteParkingLot(@PathVariable long id){
         parkingPotRepository.deleteById(id);
         return ResponseEntity.ok(1);
+    }
+
+    @GetMapping("/parking-lots")
+    public ResponseEntity getParkingLots(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15")int pageSize){
+        Pageable pageable = PageRequest.of(page,pageSize, Sort.Direction.ASC,"id");
+        Page<ParkingLot> allParkingLots = parkingPotRepository.findAll(pageable);
+
+        return ResponseEntity.ok(allParkingLots.getContent());
     }
 }
