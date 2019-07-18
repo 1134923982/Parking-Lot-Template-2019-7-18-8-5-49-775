@@ -16,4 +16,10 @@ public class ParkingLotController {
         ParkingLot resultParkingLot = parkingPotRepository.save(parkingLot);
         return ResponseEntity.ok(resultParkingLot);
     }
+
+    @DeleteMapping("/parking-lots/{id}")
+    public ResponseEntity deleteParkingLot(@PathVariable long id){
+        parkingPotRepository.deleteById(id);
+        return ResponseEntity.ok(1);
+    }
 }
