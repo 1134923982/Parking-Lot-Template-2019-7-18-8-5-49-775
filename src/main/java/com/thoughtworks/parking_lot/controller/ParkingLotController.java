@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,5 +43,12 @@ public class ParkingLotController {
     public ResponseEntity getParkingLot(@PathVariable long id){
         ParkingLot parkingLot = parkingPotRepository.findById(id).orElse(null);
         return ResponseEntity.ok(parkingLot);
+    }
+
+    @PutMapping("/parking-lots/{id}")
+    public ResponseEntity updateParkingLot(@PathVariable long id, @RequestBody ParkingLot parkingLot){
+        parkingLot.setId(id);
+        ParkingLot saveParkingLot = parkingPotRepository.save(parkingLot);
+        return ResponseEntity.ok(saveParkingLot);
     }
 }
