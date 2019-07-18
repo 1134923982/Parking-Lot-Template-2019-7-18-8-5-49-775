@@ -20,6 +20,10 @@ public class ParkingLot {
     public ParkingLot() {
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
