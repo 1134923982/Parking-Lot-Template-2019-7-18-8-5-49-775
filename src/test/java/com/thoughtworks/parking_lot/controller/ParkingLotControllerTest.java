@@ -69,4 +69,18 @@ public class ParkingLotControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(33));
     }
+
+    @Transactional
+    @Test
+    public void should_return_parking_lot_when_update_parking_lot() throws Exception {
+        mockMvc.perform(put("/parking-lots/33").contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\n" +
+                        "    \"name\": \"good parking lot 3\",\n" +
+                        "    \"capacity\": 30,\n" +
+                        "    \"position\": \"beijing\"\n" +
+                        "}"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.capacity").value(30));
+    }
 }
