@@ -17,8 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -52,5 +51,13 @@ public class ParkingLotControllerTest {
         mockMvc.perform(delete("/parking-lots/3"))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void should_return_3_parking_lots_when_request_pagesize_is_3() throws Exception {
+        mockMvc.perform(get("/parking-lots?page=0&&pageSize=3"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(3));
     }
 }
