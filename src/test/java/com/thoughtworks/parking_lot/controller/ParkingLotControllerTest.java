@@ -46,9 +46,10 @@ public class ParkingLotControllerTest {
                 .andExpect(jsonPath("$.name").value("1 lot"));
     }
 
+    @Transactional
     @Test
     public void should_return_code_status_is_ok_when_delete_parking_lot_by_id() throws Exception {
-        mockMvc.perform(delete("/parking-lots/3"))
+        mockMvc.perform(delete("/parking-lots/33"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -59,5 +60,13 @@ public class ParkingLotControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(3));
+    }
+
+    @Test
+    public void should_return_parking_lots_information_when_request_parking_lot_id() throws Exception {
+        mockMvc.perform(get("/parking-lots/33"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(33));
     }
 }

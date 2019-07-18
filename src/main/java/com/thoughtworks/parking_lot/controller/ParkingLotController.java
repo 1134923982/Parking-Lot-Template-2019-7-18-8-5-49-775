@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ParkingLotController {
@@ -35,5 +36,11 @@ public class ParkingLotController {
         Page<ParkingLot> allParkingLots = parkingPotRepository.findAll(pageable);
 
         return ResponseEntity.ok(allParkingLots.getContent());
+    }
+
+    @GetMapping("/parking-lots/{id}")
+    public ResponseEntity getParkingLot(@PathVariable long id){
+        ParkingLot parkingLot = parkingPotRepository.findById(id).orElse(null);
+        return ResponseEntity.ok(parkingLot);
     }
 }
