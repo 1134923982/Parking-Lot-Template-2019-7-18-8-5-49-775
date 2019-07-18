@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -44,5 +45,12 @@ public class ParkingLotControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("1 lot"));
+    }
+
+    @Test
+    public void should_return_code_status_is_ok_when_delete_parking_lot_by_id() throws Exception {
+        mockMvc.perform(delete("/parking-lots/3"))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }
