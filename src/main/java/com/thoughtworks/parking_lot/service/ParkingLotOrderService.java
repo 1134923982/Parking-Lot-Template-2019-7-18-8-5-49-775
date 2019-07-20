@@ -18,7 +18,7 @@ public class ParkingLotOrderService {
     private ParkingLotRepository parkingLotRepository;
 
     public ParkingLotOrder parkCar(ParkingLotOrder parkingLotOrder){
-        int currentCars = parkingLotOrderRepository.findAllCarCountByParkingLotId(parkingLotOrder.getParkingLot().getId());
+        int currentCars = parkingLotOrderRepository.getAllCarCountByParkingLotId(parkingLotOrder.getParkingLot().getId());
         ParkingLot parkingLot = parkingLotRepository.findById(parkingLotOrder.getParkingLot().getId()).orElse(null);
         if(parkingLot != null && parkingLot.getCapacity()>currentCars){
             parkingLotOrder.setCreateTime(new Date());
