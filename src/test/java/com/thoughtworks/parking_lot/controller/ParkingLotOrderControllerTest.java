@@ -53,8 +53,19 @@ public class ParkingLotOrderControllerTest {
                         "}"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
                 .andExpect(content().json("{\"id\":1,\"parkingLot\":null,\"carId\":\"'A12345\",\"createTime\":null,\"endTime\":null,\"orderStatus\":true}"));
+    }
+
+    @Test
+    public void should_return_parking_lot_order_with_end_time_and_status_is_false_when_request_fetch_car() throws Exception {
+        Mockito.when(
+                mockParkingLotOrderService.fetchCar(Mockito.anyLong())
+        ).thenReturn(new ParkingLotOrder(1,null,"'A12345",null,null,false));
+
+        mockMvc.perform(put("/parking-lot-orders/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.orderStatus").value(false));
     }
 
 }
