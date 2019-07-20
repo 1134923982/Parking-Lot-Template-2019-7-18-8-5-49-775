@@ -17,7 +17,7 @@ public class ParkingLotOrder {
     private String carId;
     private Date createTime;
     private Date endTime;
-    @Column(columnDefinition = "boolean default false")
+    @Column(columnDefinition = "boolean default true")
     private boolean orderStatus;
 
     public ParkingLotOrder() {
