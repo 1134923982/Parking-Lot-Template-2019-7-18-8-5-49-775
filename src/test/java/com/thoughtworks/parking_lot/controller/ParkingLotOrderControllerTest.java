@@ -68,4 +68,25 @@ public class ParkingLotOrderControllerTest {
                 .andExpect(jsonPath("$.orderStatus").value(false));
     }
 
+    @Test
+    public void should_return_not_position_when_a_car_enter_parking_lot_without_position() throws Exception {
+        Mockito.when(
+                mockParkingLotOrderService.parkCar(Mockito.any())
+        ).thenReturn(null);
+
+        mockMvc.perform(post("/parking-lot-orders").contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\n" +
+                        "\t\"carId\":\"A12346\",\n" +
+                        "\t\"parkingLot\":{\n" +
+                        "\t    \"id\": 1,\n" +
+                        "\t    \"name\": \"good parking lot 1\",\n" +
+                        "\t    \"capacity\": 20,\n" +
+                        "\t    \"position\": \"beijing\"\n" +
+                        "\t}\n" +
+                        "}"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("停车场已经满"));
+    }
+
 }
