@@ -1,27 +1,19 @@
 package com.thoughtworks.parking_lot.controller;
 
 import com.thoughtworks.parking_lot.model.ParkingLot;
-import com.thoughtworks.parking_lot.repository.ParkingPotRepository;
+import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
-import javax.xml.crypto.Data;
 
-import java.util.Date;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,7 +26,7 @@ public class ParkingLotControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ParkingPotRepository parkingPotRepository;
+    private ParkingLotRepository parkingLotRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -58,7 +50,7 @@ public class ParkingLotControllerTest {
     @Transactional
     @Test
     public void should_return_code_status_is_ok_when_delete_parking_lot_by_id() throws Exception {
-        ParkingLot parkingLot = parkingPotRepository.findAll().get(0);
+        ParkingLot parkingLot = parkingLotRepository.findAll().get(0);
         mockMvc.perform(delete("/parking-lots/"+parkingLot.getId()))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -66,7 +58,7 @@ public class ParkingLotControllerTest {
 
     @Test
     public void should_return_3_parking_lots_when_request_pagesize_is_3() throws Exception {
-        int expectValue = parkingPotRepository.findAll().size()>3?3:parkingPotRepository.findAll().size();
+        int expectValue = parkingLotRepository.findAll().size()>3?3: parkingLotRepository.findAll().size();
         mockMvc.perform(get("/parking-lots?page=0&&pageSize=3"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -75,7 +67,7 @@ public class ParkingLotControllerTest {
 
     @Test
     public void should_return_parking_lots_information_when_request_parking_lot_id() throws Exception {
-        ParkingLot parkingLot = parkingPotRepository.findAll().get(0);
+        ParkingLot parkingLot = parkingLotRepository.findAll().get(0);
         mockMvc.perform(get("/parking-lots/"+parkingLot.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@Table
 public class ParkingLotOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
