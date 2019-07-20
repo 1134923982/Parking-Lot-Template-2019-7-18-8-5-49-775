@@ -26,6 +26,15 @@ public class ParkingLotOrder {
     public ParkingLotOrder() {
     }
 
+    public ParkingLotOrder(long id,@NotNull ParkingLot parkingLot, String carId, Date createTime, Date endTime, boolean orderStatus) {
+        this.id = id;
+        this.parkingLot = parkingLot;
+        this.carId = carId;
+        this.createTime = createTime;
+        this.endTime = endTime;
+        this.orderStatus = orderStatus;
+    }
+
     public long getId() {
         return id;
     }
