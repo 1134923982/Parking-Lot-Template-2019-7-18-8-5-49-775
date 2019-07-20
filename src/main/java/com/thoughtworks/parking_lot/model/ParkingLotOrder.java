@@ -3,6 +3,7 @@ package com.thoughtworks.parking_lot.model;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -12,6 +13,7 @@ public class ParkingLotOrder {
     private long id;
 
     @OneToOne
+    @NotNull
     private ParkingLot parkingLot;
 
     private String carId;

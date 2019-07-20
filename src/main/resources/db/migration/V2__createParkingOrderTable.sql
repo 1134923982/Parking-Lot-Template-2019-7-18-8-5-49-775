@@ -3,7 +3,7 @@ create table parking_lot_order (
     car_id varchar(255), create_time timestamp,
     end_time timestamp,
     order_status boolean default true,
-    parking_lot_id bigint,
+    parking_lot_id bigint not null,
     primary key (id));
 alter table parking_lot_order
     add constraint parking_lot_id_fk
