@@ -12,16 +12,18 @@ import java.util.Date;
 @RestController
 public class ParkingLotOrderController {
     @Autowired
-    private ParkingLotOrderRepository parkingLotOrderRepository;
-    @Autowired
     private ParkingLotOrderService parkingLotOrderService;
 
     @PostMapping("/parking-lot-orders")
-    public ResponseEntity addParkingLot(@RequestBody ParkingLotOrder parkingLotOrder){
+    public ResponseEntity addParkingLotOrder(@RequestBody ParkingLotOrder parkingLotOrder){
         final ParkingLotOrder parkingLotOrderResult = parkingLotOrderService.parkCar(parkingLotOrder);
-        if(parkingLotOrder!=null)
-            return ResponseEntity.ok(parkingLotOrderResult);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(parkingLotOrderResult);
+    }
+
+    @PutMapping("/parking-lot-orders/{id}")
+    public ResponseEntity updateParkingLot(@PathVariable long id){
+        ParkingLotOrder parkingLotOrder = parkingLotOrderService.fetchCar(id);
+        return ResponseEntity.ok(parkingLotOrder);
     }
 
 }

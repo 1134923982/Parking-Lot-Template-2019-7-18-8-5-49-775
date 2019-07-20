@@ -17,14 +17,23 @@ public class ParkingLotOrderService {
     @Autowired
     private ParkingLotRepository parkingLotRepository;
 
-    public ParkingLotOrder parkCar(ParkingLotOrder parkingLotOrder){
+    public ParkingLotOrder parkCar(ParkingLotOrder parkingLotOrder) {
         int currentCars = parkingLotOrderRepository.getAllCarCountByParkingLotId(parkingLotOrder.getParkingLot().getId());
         ParkingLot parkingLot = parkingLotRepository.findById(parkingLotOrder.getParkingLot().getId()).orElse(null);
-        if(parkingLot != null && parkingLot.getCapacity()>currentCars){
+        if (parkingLot != null && parkingLot.getCapacity() > currentCars) {
             parkingLotOrder.setCreateTime(new Date());
             parkingLotOrder.setOrderStatus(true);
             return parkingLotOrderRepository.save(parkingLotOrder);
         }
         return null;
+    }
+
+    public ParkingLotOrder fetchCar(long id) {
+        ParkingLotOrder parkingLotOrder = parkingLotOrderRepository.findById(id).orElse(null);
+
+        parkingLotOrder.setOrderStatus(false);
+        parkingLotOrder.setEndTime(new Date());
+        return parkingLotOrderRepository.save(parkingLotOrder);
+
     }
 }

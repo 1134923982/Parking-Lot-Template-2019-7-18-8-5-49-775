@@ -10,6 +10,6 @@ import java.util.List;
 
 @Component
 public interface ParkingLotOrderRepository extends JpaRepository<ParkingLotOrder, Long> {
-    @Query("SELECT  count(car_id) from ParkingLotOrder where parking_lot_id = 1")
+    @Query("SELECT  count(car_id) from ParkingLotOrder where parking_lot_id = 1 and order_status = true")
     int getAllCarCountByParkingLotId(long parkingLotId);
 }
