@@ -17,7 +17,10 @@ public class ParkingLotOrderController {
     @PostMapping("/parking-lot-orders")
     public ResponseEntity addParkingLotOrder(@RequestBody ParkingLotOrder parkingLotOrder){
         final ParkingLotOrder parkingLotOrderResult = parkingLotOrderService.parkCar(parkingLotOrder);
-        return ResponseEntity.ok(parkingLotOrderResult);
+        if(parkingLotOrderResult!=null){
+            return ResponseEntity.ok(parkingLotOrderResult);
+        }
+        return ResponseEntity.ok("停车场已经满");
     }
 
     @PutMapping("/parking-lot-orders/{id}")
